@@ -1,10 +1,6 @@
-clc;
-clear;
-close all;
-
 % Test_name, Test_case, fuelmode, opmode, PLC_number
 
-Test_case = [27 28];
+% Test_case = [27 28];
 fuelmode = 111;
 opmode = 111;
 PLC_number = '172.16.9.101';
@@ -37,5 +33,5 @@ for i = 1:length(Test_case)
         end
     end
 end
-
-Test_Runner_for_GUI(Test_name, Test_case, fuelmode, opmode, PLC_number)
+Test_case
+% Test_Runner_for_GUI(Test_name, Test_case, fuelmode, opmode, PLC_number)
