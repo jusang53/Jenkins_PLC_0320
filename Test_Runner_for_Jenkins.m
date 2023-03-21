@@ -34,4 +34,4 @@ for i = 1:length(Test_case)
     end
 end
 Test_case
-% Test_Runner_for_GUI(Test_name, Test_case, fuelmode, opmode, PLC_number)
+Test_Runner_for_GUI(Test_name, Test_case, fuelmode, opmode, PLC_number)
