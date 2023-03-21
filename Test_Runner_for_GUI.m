@@ -44,7 +44,7 @@ function [result] = Test_Runner_for_GUI(Test_name, Test_case, fuelmode, opmode, 
     Start_test = rem(opmode,10);
     
     run_limit_time = 180;
-%     c = clock   % 실행 시간
+    c = clock   % 실행 시간
     waitbar(1/(test_len+1),h1,sprintf('Progress : %d/%d, %s', 1, test_len+1, "Setting"))
     waitbar(0,h2,sprintf("New Test"))
     TEST_INIT();    % PLC의 OPC-UA서버에 Connect, OTS모드 실행하기
