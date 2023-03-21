@@ -1,8 +1,8 @@
 % Test_name, Test_case, fuelmode, opmode, PLC_number
 
 % Test_case = [27 28];
-fuelmode = 111;
-opmode = 111;
+fuelmode = 100;
+opmode = 1;
 PLC_number = '172.16.9.101';
 
 % Define_Node();
