@@ -1,20 +1,20 @@
 function [result] = Test_Runner_for_GUI(Test_name, Test_case, fuelmode, opmode, PLC_number)
-    % Test_name : GUI¿¡¼­ ¼±ÅÃµÈ TestµéÀÇ ÀÌ¸§µé
-    % Test_case : GUI¿¡¼­ ¼±ÅÃµÈ TestµéÀÇ ¹øÈ£µé
-    % fuelmode : GUI¿¡¼­ ¼±ÅÃµÈ fuel mode (diesel : 100, gas : 10, backup : 1)
-    % opmode : GUI¿¡¼­ ¼±ÅÃµÈ run mode (stop : 100, start : 10, run : 1)
+    % Test_name : GUIì—ì„œ ì„ íƒëœ Testë“¤ì˜ ì´ë¦„ë“¤
+    % Test_case : GUIì—ì„œ ì„ íƒëœ Testë“¤ì˜ ë²ˆí˜¸ë“¤
+    % fuelmode : GUIì—ì„œ ì„ íƒëœ fuel mode (diesel : 100, gas : 10, backup : 1)
+    % opmode : GUIì—ì„œ ì„ íƒëœ run mode (stop : 100, start : 10, run : 1)
     
     clc; close all; format shortg;
 
     Fulltime = tic;
-    Global_Node();  % functionÇü½ÄÀÌ±â ¶§¹®¿¡ Global Node·Î ÀüÃ¼ º¯¼ö¸¦ ¼±¾ğÇØ¼­ »ç¿ë °¡´ÉÇÏµµ·Ï ÇÔ.
+    Global_Node();  % functioní˜•ì‹ì´ê¸° ë•Œë¬¸ì— Global Nodeë¡œ ì „ì²´ ë³€ìˆ˜ë¥¼ ì„ ì–¸í•´ì„œ ì‚¬ìš© ê°€ëŠ¥í•˜ë„ë¡ í•¨.
     
     plc_no = PLC_number;
     
     test_len = length(Test_case);
     progress_bar_2 = 33;
     
-    % LogÆÄÀÏ »ı¼ºÀ» À§ÇÔ
+    % LogíŒŒì¼ ìƒì„±ì„ ìœ„í•¨
     TestNumber = [];
     TestName = [];
     FuelMode = [];
@@ -25,7 +25,7 @@ function [result] = Test_Runner_for_GUI(Test_name, Test_case, fuelmode, opmode, 
     TestType = [];
     Note = [];
     
-    % Progress bar, h1Àº ÀüÃ¼ Å×½ºÆ®ÀÇ ÁøÇà»óÈ²À» Ç¥½Ã, h2´Â ÇöÀç Å×½ºÆ®ÀÇ ÁøÇà»óÈ²À» Ç¥½Ã
+    % Progress bar, h1ì€ ì „ì²´ í…ŒìŠ¤íŠ¸ì˜ ì§„í–‰ìƒí™©ì„ í‘œì‹œ, h2ëŠ” í˜„ì¬ í…ŒìŠ¤íŠ¸ì˜ ì§„í–‰ìƒí™©ì„ í‘œì‹œ
     h1 = waitbar(0,'Wait for setting ... ');
     h2 = waitbar(0,'Wait for setting ... ');
     pos_w1 = [585.0000  435.0000  270.0000   56.2500];
@@ -33,25 +33,25 @@ function [result] = Test_Runner_for_GUI(Test_name, Test_case, fuelmode, opmode, 
     set(h1, 'position', pos_w1)
     set(h2, 'position', pos_w2)
     
-    % fuelmode : GUI¿¡¼­ ¼±ÅÃµÈ fuel mode (diesel : 100, gas : 10, backup : 1)
+    % fuelmode : GUIì—ì„œ ì„ íƒëœ fuel mode (diesel : 100, gas : 10, backup : 1)
     Diesel_test = fix(fuelmode/100);
     Gas_test = rem(fix(fuelmode/10),10);
     Backup_test = rem(fuelmode,10);
 
-    % opmode : GUI¿¡¼­ ¼±ÅÃµÈ run mode (stop : 100, start : 10, run : 1)
+    % opmode : GUIì—ì„œ ì„ íƒëœ run mode (stop : 100, start : 10, run : 1)
     Run_test = fix(opmode/100);
     Stop_test = rem(fix(opmode/10),10);
     Start_test = rem(opmode,10);
     
     run_limit_time = 180;
-%     c = clock   % ½ÇÇà ½Ã°£
+%     c = clock   % ì‹¤í–‰ ì‹œê°„
     waitbar(1/(test_len+1),h1,sprintf('Progress : %d/%d, %s', 1, test_len+1, "Setting"))
     waitbar(0,h2,sprintf("New Test"))
-    TEST_INIT();    % PLCÀÇ OPC-UA¼­¹ö¿¡ Connect, OTS¸ğµå ½ÇÇàÇÏ±â
+    TEST_INIT();    % PLCì˜ OPC-UAì„œë²„ì— Connect, OTSëª¨ë“œ ì‹¤í–‰í•˜ê¸°
     latest_Test = "Setting";
     result={};
-    for i = 1:length(Test_case)     % ¼±ÅÃµÈ Å×½ºÆ®µé for loop·Î ½ÇÇà
-        % ÀçÁ¢¼ÓÀ» ÇÏ¿© ¿À·£ ½Ã°£ Å×½ºÆ®¸¦ ÁøÇàÇÒ ¶§ ¿¡·¯°¡ ³ª´Â °ÍÀ» ¹æÁö
+    for i = 1:length(Test_case)     % ì„ íƒëœ í…ŒìŠ¤íŠ¸ë“¤ for loopë¡œ ì‹¤í–‰
+        % ì¬ì ‘ì†ì„ í•˜ì—¬ ì˜¤ëœ ì‹œê°„ í…ŒìŠ¤íŠ¸ë¥¼ ì§„í–‰í•  ë•Œ ì—ëŸ¬ê°€ ë‚˜ëŠ” ê²ƒì„ ë°©ì§€
         disconnect(uaClient);       
         connect(uaClient);
        
@@ -64,11 +64,11 @@ function [result] = Test_Runner_for_GUI(Test_name, Test_case, fuelmode, opmode, 
         Test_number = Test_case(i);
         result{i,1} = Test_number;
         
-        % Å×½ºÆ® ½ÇÇà
+        % í…ŒìŠ¤íŠ¸ ì‹¤í–‰
         result{i,2} = Test_script();
         Reset();
         
-        % ÀÓ½Ã ·Î±×ÆÄÀÏ »ı¼º (Å×½ºÆ® ÇÏ³ª ³¡³¯ ¶§¸¶´Ù »ı¼º)
+        % ì„ì‹œ ë¡œê·¸íŒŒì¼ ìƒì„± (í…ŒìŠ¤íŠ¸ í•˜ë‚˜ ëë‚  ë•Œë§ˆë‹¤ ìƒì„±)
         filename = "";
         d = clock;
         for j = 1:5
@@ -79,7 +79,7 @@ function [result] = Test_Runner_for_GUI(Test_name, Test_case, fuelmode, opmode, 
         writetable(log,filename,'Sheet',1)
     end
     
-    % ·Î±×ÆÄÀÏ »ı¼º (Å×½ºÆ®°¡ ¸ğµÎ ³¡³ª¸é »ı¼º)
+    % ë¡œê·¸íŒŒì¼ ìƒì„± (í…ŒìŠ¤íŠ¸ê°€ ëª¨ë‘ ëë‚˜ë©´ ìƒì„±)
     filename = "";
     for i = 1:5
         filename = filename + round(c(i)) + "-";
@@ -89,5 +89,23 @@ function [result] = Test_Runner_for_GUI(Test_name, Test_case, fuelmode, opmode, 
     writetable(log,filename,'Sheet',1)
     waitbar(test_len/test_len,h1,sprintf('Test Finish'))
     waitbar(test_len/test_len,h2,sprintf('Test Finish'))
+    
+    pass_test = 0;
+    fail_test = 0;
+    for i = 1:length(Passed)
+        if isequal(Passed(i), "o")
+            pass_test = pass_test + 1;
+        else
+            fail_test = fail_test + 1;
+        end            
+    end
+    contents = sprintf('Success Tests : %d, Fail Tests : %d', pass_test, fail_test);
+    mail = 'maze0530@naver.com';            % ë³´ë‚´ëŠ” ë©”ì¼
+    password = 'maze123123!!!!';            % ë³´ë‚´ëŠ” ë©”ì¼ ë¹„ë°€ë²ˆí˜¸
+    To_mail = 'maze0530@naver.com';         % ë°›ëŠ” ë©”ì¼
+    mail_title = 'Safetylist Test Log';     % ì œëª©
+    mail_body = contents;                   % ë³¸ë¬¸ 
+    mail_file = filename;                   % ì²¨ë¶€íŒŒì¼
+    Send_Report();
     disconnect(uaClient);
 end
