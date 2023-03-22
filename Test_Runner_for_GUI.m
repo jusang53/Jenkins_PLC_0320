@@ -105,7 +105,7 @@ function [result] = Test_Runner_for_GUI(Test_name, Test_case, fuelmode, opmode, 
     To_mail = 'maze0530@naver.com';         % 받는 메일
     mail_title = 'Safetylist Test Log';     % 제목
     mail_body = contents;                   % 본문 
-    mail_file = filename;                   % 첨부파일
+    mail_file = '';                   % 첨부파일
     Send_Report();
     disconnect(uaClient);
 end
